@@ -37,6 +37,7 @@
 <div class="slides">
 
   <!-- slideset: intro -->
+<section>
   <section>
     <h1>Web Accessibility<br /><small>Techniques for Designers<br />and Developers</small></h1>
     <p>North West Drupal User Group<br />10th May 2016</p>
@@ -54,9 +55,11 @@
   <section data-background="images/pink-spacesuit-druplicon.png">
     <p class="trans-bw" style="margin-left: 350px; margin-top: 290px; width: 55%;">I love Drupal <em>this much</em>.</p>
   </section>
+</section>
 
 
 <!-- slideset: Why accessibility -->
+<section>
   <section>
     <h2>What is web accessibility?</h2>
     <p>UK government statistics estimate <a href="https://www.gov.uk/government/statistics/disability-prevalence-estimates-200203-to-201112-apr-to-mar">11.6 million people</a> are living with some kind of disability in the UK.</p>
@@ -97,9 +100,11 @@
     <p></p>
     </p><small>Source: <a href="http://webaim.org/projects/screenreadersurvey6/#reasons">WebAIM Screen reader User Survey #6 Results</a></small></p>
   </section>
+</section>
 
 
 <!-- slideset: whose responsibility? -->
+<section>
   <section>
     <h2>Who's responsible?</h2>
   </section>
@@ -133,6 +138,7 @@
       <li>Others...?</li>
     </ul>
   </section>
+</section>
 
 
 <!-- slideset: topic not covered -->
@@ -149,6 +155,7 @@
 
 
 <!-- slideset: Accessibility Principles -->
+<section>
   <section>
     <h2>Accessibility Principles</h2>
     <p><em>"POUR"</em><p/>
@@ -173,9 +180,11 @@
     </ul>
     <p>Example: <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/content-structure-separation-programmatic.html">SC 1.3.1 Info and Relationships</a> describes the use of headings and labels to indicate the structure of a page.</p>
   </section>
+</section>
 
 
 <!-- slideset: colour contrast -->
+<section>
   <section>
     <h2>Colour Contrast</h2>
     <p><i style="color: #aaa; background-color: #ddd; padding:0 1em;">Grey text, on a grey background, is hard to read.</i></p>
@@ -235,9 +244,11 @@
     <h3>Colour contrast inspiration</h3>
     <p><a href="http://contrastrebellion.com/">Contrast Rebellion</a></p>
   </section>
+</section>
 
 
 <!-- slideset: colour blindness -->
+<section>
   <section>
     <h2>Colour Blindness</h2>
     <p><i>"Please correct the errors shown in red."</i></p>
@@ -282,9 +293,11 @@
       <li><a href="http://webaim.org/blog/wcag-2-0-and-link-colors/">WebAIM article on Link colours</a></li>
     </ul>
   </section>
+</section>
 
 
 <!-- slideset: slideset: introducing the keyboard-only experience -->
+<section>
   <section>
     <h2>The Keyboard-only Experience</h2>
     <p>Everything that can be controlled with a mouse,<br />must also be <em>operable</em> with a keyboard.</p>
@@ -351,6 +364,7 @@
 
 
 <!-- slideset: HTML semantics -->
+<section>
   <section>
     <h2>Semantic HTML</h2>
     <p>HTML is a great language for marking up <em>documents</em>.</p>
@@ -404,11 +418,12 @@
     <p><code>&lt;input type="submit"&gt;</code></p>
     <p>If you want a <code>&lt;button&gt;</code> use</p>
     <code>'#type' => 'markup'</code>
-    
   </section>
+</section>
 
 
 <!-- slideset: introducing the screen-reader experience -->
+<section>
   <section>
     <h2>The Screen-reader Experience</h2>
     <p><em>Whoah. Learning curve.</em></p>
@@ -470,9 +485,11 @@
     <p>Note: Drupal 8 is a <i>nice</i> screen-reader experience ;-)</p>
     <!-- BBC homepage, volunteer? -->
   </section>
+</section>
 
 
 <!-- slideset: CSS affects a11y -->
+<section>
   <section>
     <h2>What about CSS?</h2>
     <p><i>Myth: </i>Good HTML is all that matters.</p>
@@ -507,9 +524,11 @@
     <p><em>Good:</em><br />"Invisible" labels are still accessible to screen-readers.</p>
     <p><em>Bad:</em><br />Focusable elements are still in the tabbing order. Sighted keyboard users can traverse these, but can't tell what is in focus! Operable, yet not perceivable. Example: a navigation menu which slides on/off the side of the page.</p>
   </section>
+</section>
 
 
 <!-- slideset: JavaScript affects a11y -->
+<section>
   <section>
     <h2>What about Javascript?</h2>
     <p><i>Myth: </i> Accessible sites can't use Javascript.</p>
@@ -517,11 +536,12 @@
     <p>Javascript can change CSS properties, or HTML attributes, or even replace whole chunks of HTML in the DOM.</p>
     <p>Used with care, Javascript can <em>greatly</em> enhance accessibility.</p>
     <p>It's time to learn about ARIA.</p>
-
   </section>
+</section>
 
 
 <!-- slideset: introducing ARIA -->
+<section>
   <section>
     <h2>Introducing WAI-ARIA</h2>
     <p>HTML is NOT a general-purpose user interface language!</p>
@@ -605,9 +625,11 @@
     <p>New HTML5 elements offer equivalents:<br /> main, header, footer, nav, aside.</p>
     <p>Caution: <a href="http://html5accessibility.com/">Internet Explorer still needs roles</a>, because the HTML semantics are not passed up through accessibility API.<br />i.e. &lt;nav role="navigation"&gt;</p>
   </section>
+</section>
 
 
 <!-- slideset: reading list -->
+<section>
   <section>
     <h2>Reading List</h2>
     <ul>
@@ -653,6 +675,7 @@
       <li><a href="http://getbootstrap.com/components/">Twitter Bootstrap Components</a><br />Well documented, plenty detail about steps you need to take to make best use of Bootstrap's accessibility.</li>
     </ul>
   </section>
+</section>
 
 
 <!-- slideset: End matter -->
