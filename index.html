@@ -1,0 +1,599 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title></title>
+                <meta name="author" content="Andrew Macpherson" />
+                <meta name="description" content="Slides from a talk given at North West Drupal User Group, Manchester, 10th May 2016" />
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/night.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+                <!-- CUSTOM fuzzbomb styles -->
+                <style>
+                  .reveal a { text-decoration: underline; }
+                  .reveal .trans-bw { background-color: rgba(25, 25, 25, 0.35); color: #eee; }
+                  .reveal section img { border: medium none; box-shadow: none; }
+                  .reveal img.img__inline { border: medium none; box-shadow: none; margin: 0; }
+                  .reveal .image--large { height: 90%; width: 90%; }
+                </style>
+	</head>
+	<body>
+		<div class="reveal">
+<div class="slides">
+<!-- slideset: make a custom widget work with a keyboard -->
+<!-- slideset: assistive technology -->
+<!-- slideset: make a custom widget work with a screenreader-->
+
+<!-- TODO bad form -->
+<!-- TODO form label describedby example-->
+<!-- TODO bad button code example -->
+<!-- TODO CSS effects display visibility visually-hidden -->
+
+  <!-- slideset: intro -->
+  <section>
+    <h1>Web Accessibility<br /><small>Techniques for Developers</small></h1>
+    <p>North West Drupal User Group<br />10th May 2016</p>
+  </section>
+
+  <section>
+    <h2>Hi.</h2>
+    <h3>Andrew Macpherson</h3>
+    <p>Senior developer at <a href="http://www.annertech.com">Annertech</a></p>
+    <p>Accessibility contributor at <a href="https://www.drupal.org/u/andrewmacpherson">Drupal</a> project</p>
+    <p><small><a href="http://twitter.com/martianwebdev">@MartianWebDev</a> on Twitter.<br />
+    <a href="https://github.com/fuzzbomb">Fuzzbomb</a> on GitHub, and most other places.<br />
+    We don't get to use cool handles on <a href="https://www.linkedin.com/in/andrew-macpherson-64139232">LinkedIn</a>.</small></p>
+  </section>
+  <section data-background="images/pink-spacesuit-druplicon.png">
+    <p class="trans-bw" style="margin-left: 350px; margin-top: 290px; width: 55%;">I love Drupal <em>this much</em>.</p>
+  </section>
+
+
+<!-- slideset: Why accessibility -->
+  <section>
+    <h2>What is web accessibility?</h2>
+    <p>UK government statistics estimate <a href="https://www.gov.uk/government/statistics/disability-prevalence-estimates-200203-to-201112-apr-to-mar">11.6 million people</a> are living with some kind of disability in the UK.</p>
+    <ul>
+      <li>Works for everyone, regardless of disability.</li>
+      <li>Works with varied devices, including assistive technology.</li>
+      <li>Remove barriers to participation.</li>
+      <li>Increase social mobility (<i>c.f. the digital divide</i>).</li>
+      <li>Related terms: universal design, inclusive design.</li>
+    <ul>
+  </section>
+  <section>
+    <h3>Who benefits? We all do!</h3>
+    <p>Broad categories of impairments...</p>
+    <ul>
+      <li>Cognitive impairments<br /><i>learning differences, distractability, dyslexia, ...</i></li>
+      <li>Hearing impairments<br /><i>deafness, hard-of-hearing, tinnitus</i></li>
+      <li>Motor impairments<br /><i>limited fine motor control, slow response time</i></li>
+      <li>Visual impairments<br /><i>blindness, low-vision, colour-blindness</i></li>
+    </ul>
+  </section>
+  <section>
+    <h3>Disability in Context</h3>
+    <p>Disability isn't always clear-cut. <i>It depends...</i></p>
+    <ul>
+      <li>Mild to severe.</li>
+      <li>Permanent or temporary - <i>broken wrist in plaster cast</i>.</li>
+      <li>When acquired? <i>During childhood, or later in life</i>.</li>
+      <li>Environment - <i>noisy places, bright sunlight, darkness</i>.</li>
+      <li>Situation - <i>driving a car, both hands-full</i>.</li>
+      <li>"Visibility" - a wheel chair is apparent, dyslexia isn't.</li>
+    </ul>
+  </section>
+
+
+<!-- slideset: whose responsibility? -->
+  <section>
+    <h2>Who's responsible?</h2>
+  </section>
+  <section>
+    <h3>Web technologists</h3>
+    <ul>
+      <li>Designers - <i>colours, page layout, interactive styles</i></li>
+      <li>Front-end developers - <i>custom component behaviour,<br />e.g. date-pickers, notifications, FancyMegaDropSearchBox</i></li>
+      <li>Information Architects - <i>navigation, page outline, data models</i></li>
+      <li>UX designers - <i>can everyone take the same "journey"?</i></span></li>
+      <li>Back-end developers - <i>your web service provide images, but does it also provide text alternatives?</i></li>
+    </ul>
+  </section>
+  <section>
+    <h3>Content Authors</h3>
+    <ul>
+      <li>Document outline: headings, sections, etc.</li>
+      <li>Organising content, writing styles, use of diagrams, plain English, etc.</li>
+      <li>Context - choice of text alternatives for images, summaries for tables.</li>
+      <li>Audio/Video content, captioning, etc.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>Who <i>else</i> is responsible?</h3>
+    <p>Not just "web" professionals...</p>
+    <ul>
+      <li>Product-owners - <i>commissioning a web-site.</i></li>
+      <li>Customer service professionals - <i>a website is just one part of the customer's experience</i>.</li>
+      <li>PR - <i>outreach, tell people your website is easy to use.</i></li>
+      <li>Others...?</li>
+    </ul>
+  </section>
+
+
+<!-- slideset: topic not covered -->
+ <section>
+   <h2>Topics I'm NOT covering today</h2>
+   <p>... but feel free to ask about them later!</p>
+   <ul>
+     <li>Developer tools<br /><i>So many to choose from. We'll see a few during demos.</i></li>
+     <li>Automated testing<br /><i>Many problems can't be caught this way.</i></li>
+     <li>User testing for accessibility.<br /><i>Awesome if you can manage this!</i></li>
+     <li>Compliance, procurement, legal aspects.<br /><i>Yawn.</i></li>
+   </ul>
+ </section>
+
+
+<!-- slideset: Accessibility Principles -->
+  <section>
+    <h2>Accessibility Principles</h2>
+    <p><em>"POUR"</em><p/>
+    <ul>
+      <li>Perceivable</li>
+      <li>Operable</li>
+      <li>Understandable</li>
+      <li>Robust</li>
+    </ul>
+    <p><a href="">W3C Web Acessibility Initiative</a> (WAI)</p>
+    <p><a href="https://www.w3.org/WAI/intro/wcag.php">Web Content Accessibility Guidelines 2.0</a> (WCAG)</p>
+  </section>
+  <section>
+    <h3>WCAG Success Criteria</h3>
+    <p>WCAG is organized as a set of <em>success criteria</em>, each describing an accessibility practice in terms of:</p>
+    <ul>
+      <li>Intent &amp; Benefits</li>
+      <li>Priority level (A, AA, AAA)</li>
+      <li>Examples</li>
+      <li>Sufficient techniques</li>
+      <li>Common failures</li>
+    </ul>
+    <p>Example: <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/content-structure-separation-programmatic.html">SC 1.3.1 Info and Relationships</a> describes the use of headings and labels to indicate the structure of a page.</p>
+  </section>
+
+
+<!-- slideset: colour contrast -->
+  <section>
+    <h2>Colour Contrast</h2>
+    <p><i style="color: #aaa; background-color: #ccc; padding:0 1em;">Grey text, on a grey background, is hard to read.</i></p>
+    <p>Who benefits? Users who...</p>
+    <ul>
+      <li>have low vision, e.g. <i>cateracts</i></li>
+      <li>are over the age of, say, 40</li>
+      <li>have low-quality screens (<i>LCD with poor viewing angle</i>)</li>
+      <li>are using their devices outdoors</li>
+      <li>are indoors, but near a window (or, <i>on a train</i>)</li>
+      <li><i>... pretty much everyone</i></li>
+    </ul>
+  </section>
+  <section>
+    <h3>Colour Contrast Thresholds</h3>
+    <ul>
+      <li>Level AA - <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html">Contrast (Minimum)</a>
+        <ul>
+          <li>4.5 : 1 for normal text</li>
+          <li>3 : 1 for large text (above 18pt)</li>
+        </ul>
+      </li>
+      <li>Level AAA - <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast7.html">Contrast (Enhanced)</a>
+        <ul>
+          <li>7 : 1 for normal text</li>
+          <li>4.5 : 1 for large text (above 18pt)</li>
+        </ul>
+      </li>
+    </ul>
+    <p>Beware: large text is described in <em>points</em>, not pixels.<br />Text size varies with screen size!</p>
+  </section>
+  <section>
+    <h3>Colour contrast tips</h3>
+    <ul>
+      <li>Establish accessible colours <em>before</em> your client signs-off the design.</li>
+      <li>Aim for colour contrast which is comfortably over the threshold.</li>
+      <li>Avoid the borderline contrast level permitted for large text (3:1)<br /> - not robust enough for small devices.</li>
+      <li><span style="background-color: white; color: #767676;">Palest grey text which passes on white background is #767676</span></li>
+      <li><code style="background-color: white; color: red;">color: red; /* #f00 */</code> on white <strong>does not</strong> pass.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>Colour contrast tools</h3>
+    <p><i>Many to choose from.</i></p>
+    <ul>
+      <li>Online tools, e.g.
+        <ul>
+          <li>Lea Verou's <a href="https://leaverou.github.io/contrast-ratio/#%23808080-on-%23d3d3d3">Contrast Ratio</a></li>
+          <li><a href="https://accessibility.oit.ncsu.edu/tools/color-contrast/index.php?colors=cc0000,000000,ffffff,383838,666666,CCCCCC,E1E1E1,5C5541,666633,556677,A20000,A79574,C5BD9D,E5E1D0,778855,99AA77,CCDDAA,67849C,CC9900">NCSU Color Pallette Accessibility Evaluator</a></li>
+        </ul>
+      <li>Web browser add-ons</li>
+      <li>Tools inside graphic suites</li>
+      <li>Stand-alone applications</li>
+    </ul>
+  </section>
+  <section>
+    <h3>Colour contrast inspiration</h3>
+    <p><a href="http://contrastrebellion.com/">Contrast Rebellion</a></p>
+  </section>
+
+
+<!-- slideset: colour blindness -->
+  <section>
+    <h2>Colour Blindness</h2>
+    <ul>
+      <li>Reduced ability to perceive one or more pigments.</li>
+      <li>Affects ~8% of men (~4% of whole population)</li>
+      <li>Don't rely on colour alone to convey meaning.</li>
+      <li><a href="http://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-without-color.html">WCAG SC 1.4.1 - Use of Color</a></li>
+    </ul>
+  </section>
+  <section data-background="images/1280px-Snooker_Freeball_greyscale.png">
+    <blockquote class="trans-bw" style="margin-top: 80px; width: 100%;">"Steve is going for the pink ball - and for those of you who are watching in black and white, the pink is next to the green."<br /><cite>Ted Lowe (1920-2011)</cite></blockquote>
+  </section>
+  <section>
+    <h3>Demo:<br />Protanopia Simulation</h3>
+    <p>A person with protanopia has difficulty perceiving the red component of colours.</p>
+    <p>Let's look at some text where the links are styled red...</p>
+  </section>
+  <section>
+    <img class="image--large" src="images/red-links-no-underline-eff.png" alt="screenshot of article with red links in paragraphs, not underlined." />
+  </section>
+  <section>
+    <img class="image--large" src="images/red-links-no-underline-protanopia-eff.png" alt="Simulation of protanopia. Red links in paragraphs are not easy to distinguish." />
+  </section>
+  <section>
+    <p>Solution? Underline the links!</p>
+    <p>This allows links to stand out, without relying on colour alone.</p>
+  </section>
+  <section>
+    <img class="image--large" src="images/red-links-underline-ageaction.png" alt="Screenshot of article where red links are also underlined." />
+  </section>
+  <section>
+    <img class="image--large" src="images/red-links-underline-protanopia-ageaction.png" alt="Protanopia simulation of previous screenshot. Underlined links are easily to see." />
+  </section>
+  <section>
+    <h3>Accessible pass/fail Colour Coding</h3>
+    <ul>
+      <li>Don't rely on green vs red</li>
+      <li>Use shapes too - ticks and crosses <img class="img__inline" alt="Green tick icon" src="images/Dialog-accept.svg" /> <img class="img__inline" alt="Red Cross icon" src="images/Dialog-error-round.svg" /></li>
+      <li>Demo: <a href="http://accessibility.psu.edu/color/colorcoding/">Colour coding article at Penn State Uni.</a></li>
+      <li><a href="http://webaim.org/blog/wcag-2-0-and-link-colors/">WebAIM article on Link colours</a></li>
+    </ul>
+  </section>
+
+
+<!-- slideset: slideset: introducing the keyboard-only experience -->
+  <section>
+    <h2>The Keyboard-only Experience</h2>
+    <p>Everything that can be controlled with a mouse,<br />must also be <em>operable</em> with a keyboard.</p>
+    <p>Just a few standard controls.</p>
+    <p>Not necessarily using assistive-technology.<br />Might be a plain-old QWERTY keyboard.</p>
+  </section>
+  <section>
+    <h3>Basic keyboard controls</h3>
+    <img alt="keyboard diagram, basic control keys highlighted" src="images/a11y-keyboard-layout-tkl.png" />
+    <p>The highlighted keys are used to ineract with a web page.</p>
+  </section>
+  <section>
+    <h3>Interacting with the page</h3>
+    <ul>
+      <li>TAB moves between <em>interactive</em> elements.<br />
+         (SHIFT + TAB moves backwards among them.)</li>
+      <li>ENTER operates links and buttons.</li>
+      <li>SPACE operates buttons and checkboxes</li>
+      <li>Arrow keys control various things (radios, select, slider)</li>
+      <li>ESCAPE cancels things (e.g. dialogs).</li>
+    </ul>
+  </section>
+  <section>
+    <h3>More ways to use the keyboard</h3>
+    <ul>
+      <li>Navigate viewport with SPACE, PgUp, PgDn, Home, End</li>
+      <li>Browser Menu Bar + Context menus</li>
+      <li>Caret browsing, spatial navigation - some browsers only.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>Keyboard-only Demo</h3>
+    <ul>
+      <li><a href="http://www.bbc.co.uk/news">BBC News</a><br/>clear focus styles</li>
+      <li><a href="http://www.channel4.com/news/">Channel 4 news</a><br />poor/absent focus styles.</li>
+      <li><a href="http://webaim.org/intro/">WebAIM: Intro to Web Accessibility</a><br />Animated focus styles!</li>
+    </ul>
+  </section>
+  <section>
+    <h3>Focus styles</h3>
+    <p>Sighted keyboard users <em>really</em> need to be sure what element has focus, before they press enter.</p>
+    <p>Subtle focus styles <em>don't work</em> - they need to be clear. Beware of re-using mouse hover styles.</p>
+    <p>This doesn't limit your creativity - take inspiration from games consoles and Smart TV.</p>
+    <!-- @todo twitter message dialog focus styles -->
+  </section>
+  <section>
+    <p><code>a { outline: none; }</code></p>
+    <p><a href="http://www.outlinenone.com/">DON'T DO IT!</a></p>
+    <p>(Unless you replace it with something even clearer)</p>
+  </section>
+  <section>
+    <p>Example: Virgin Media TV menus.<br />Focus indicated by colour, border, width, and arrow.</p>
+    <img src="https://cdn.recombu.com/media/digital/news/VMT_03_w670_h419.png" alt="Screenshot of Virgin Media TV interface, showing a very clear focus style" />
+    <p><small>Source: <a href="https://recombu.com/digital/article/virgin-media-tivo-teases-new-design-ahead-of-rollout">Virgin Media TiVo teases new design ahead of rollout</a></small></p>
+  </section>
+  <section>
+    <h3>Bypass Blocks - part 1
+    <br />"skip to main content" links</h3>
+    <p>Allows quick access to interact with the page's main content, <em>without</em> traversing lots of sidebar links, or a header menu.</p>
+    <p>Who benefits? <em>Primarily</em> sighted keyboard users. (Screen-readers offer other ways to get around a page.)</p>
+    <p><a href="https://www.w3.org/WAI/GL/UNDERSTANDING-WCAG20/navigation-mechanisms-skip.html">WCAG Success Criterion 2.4.1 - Bypass Blocks</a></p>
+  </section>
+</section>
+
+
+<!-- slideset: HTML semantics -->
+  <section>
+    <h2>Semantic HTML</h2>
+    <p>HTML is a great language for marking up <em>documents</em>.</p>
+    <ul>
+      <li>Document outline: headings, lists. </li>
+      <li>Regions: navigation, article, footer, etc.</li>
+      <li>Hyperlinks</li>
+      <li>Forms: fieldsets, labels, etc.</li>
+      <li>Tables, figures.</li>
+      <li>Embedded content: images, video, etc.</li>
+    <ul>
+  </section>
+  <section>
+    <h3>Interactive Elements</h3>
+    <p>HTML is <em>not</em> a general-purpose user-interface language, so developers often customize behaviour with javascript. Be careful what elements you use!</p>
+    <ul>
+      <li>&lt;div&gt; means <em>nothing</em></li>
+      <li>&lt;span&gt; means <em>nothing</em></li>
+      <li>&lt;button&gt; - pressing it makes something <em>happen</em>.</li>
+      <li>&lt;a href&gt; - hyperlinks direct you <em>somewhere else</em>.</li>
+    </ul>
+    <p>Button vs. Link. We'll run into that a lot.</p>
+  </section>
+  <section>
+    <h3>Human-readable semantics</h3>
+    <p>Some attributes often contain rich semantics, but are really only useful to a human audience: developers!</p>
+    <ul>
+      <li>class attribute</li>
+      <li>data-* attributes</li>
+      <li>ng-* attributes</li>
+      <li>Others?</li>
+    </ul>
+    <p>None are understood by screen-readers.</p>
+    <p><code>&lt;div class="button"&gt;</code> is <em>not a button</em>.<br />Use <code>&lt;button&gt;</code> instead.</p>
+  </section>
+  <section>
+    <h3>Machine-Readable Semantics</h3>
+    <p>Assistive technology can understand these.</p>
+    <ul>
+      <li>HTML Elements: headings, tables, forms, ...</li>
+      <li>HTML attributes: disabled, required, checked, ...</li>
+      <li>aria-* attributes</li>
+      <li>SVG, MathML.</li>
+    </ul>
+  </section>
+
+
+<!-- slideset: introducing the screen-reader experience -->
+  <section>
+    <h2>The Screen-reader Experience</h2>
+    <p><em>Whoah. Learning curve.</em></p>
+  </section>
+  <section>
+    <h3>Some Useful Tools</h3>
+    <ol>
+      <li>Headphones! Be kind to your colleagues :-)</li>
+      <li>A cheat-sheet with keyboard controls.</li>
+      <li>Learn the <em>stop-talking</em> key command (usually <code>Control</code>).</li>
+    </ol>
+  </section>
+  <section>
+    <h3>Slice &amp; Dice</h3>
+    <p>Many ways to navigate or inspect a page...</p>
+    <ul>
+      <li>Focus via TAB key, just like a sighted keyboard user.</li>
+      <li>Document outline: sensible heading levels!</li>
+      <li>Landmark Roles: header, footer, navgiation, sidebar, search box.</li>
+      <li>Forms mode (some screen readers offer extra tools for forms).</li>
+      <li>Browse a list of links.</li>
+      <li>Table navigation tools (e.g. read headers, skip to end of row, etc.)</li>
+    </ul>
+  </section>
+  <section>
+    <img class="image--large" src="images/drupal8-aria-landmarks-nvda-dialog.png" alt="Screenshot of NVDA screen reader's landmarks dialog" />
+  </section>
+  <section>
+    <h3>Screenreader User habits</h3>
+    <p>See the <a href="http://webaim.org/projects/screenreadersurvey6/">WebAIM Screenreader user survey</a></p>
+    <ul>
+      <li>What technology do you use?</li>
+      <li>Preferred navigation methods?</li>
+      <li>Dealing with images, frames, PDF, multimedia, ...</li>
+    </ul>
+  </section>
+  <section>
+    <h3>So, What Does a Screen Reader<br />Actually Read?</h3>
+    <p>It reads the <i>accessibility tree</i> - huh?</p> 
+    <ul>
+      <li>Accessibility APIs are provided as part of the desktop operating system.</li>
+      <li>Web browsers and assistive technology communicate through these APIs.</li>
+      <li>The <i>accessibility tree</i> is a bit like a sub-set of the DOM, after taking into account HTML, CSS, ARIA, etc. </li>
+      <li>Developer tools to inspect the accessibility tree are becoming more widely available.</li>
+      <li>Beware of accessibility tools which <a href="http://www.karlgroves.com/2013/09/06/web-accessibility-testing-tools-who-tests-the-dom/">only read the HTML source code</a>, instead of the DOM.</li> 
+    </ul>
+  </section>
+  <section>
+    <h3>Screenreader Demo</h3>
+    <p>Let's look at a Drupal 8 website!</p>
+    <ul>
+      <li>Landmark roles</li>
+      <li>Forms have <code>aria-describedby</code></li>
+      <li>Fancy drop-buttons!</li>
+      <li> Collapsible summary/details elements!</li>
+      <li>ARIA-live announcements (e.g. module search filter)</li>
+    </ul>
+    <p>Note: Drupal 8 is a <i>nice</i> screen-reader experience ;-)</p>
+    <!-- BBC homepage, volunteer? -->
+  </section>
+
+
+<!-- slideset: introducing ARIA -->
+  <section>
+    <h2>Introducing WAI-ARIA</h2>
+    <p>HTML is NOT a general-purpose user interface language!</p>
+    <p>ARIA (accessible rich internet applications) is a vocabulary of<br />UI roles, states, and properties.</p>
+    <p>They express the range of interaction found in native Desktop and Mobile UI widget APIs, using formal, machine-readable semantics.</p>
+  </section>
+  <section>
+    <h3>An ARIA buffet</h3>
+    <ul>
+      <li>Roles: navigation, menubar, spinbutton, tablist, ...</li>
+      <li>States: expanded, pressed, invalid, grabbed, ...</li>
+      <li>Relationships: labelled-by, described-by, controls, ...</li>
+      <li>Properties: haspopup, dropeffect, readonly, ...</li>
+    </ul>
+  </section>
+  <section>
+    <h3>The Golden Rules of ARIA</h3>
+    </p>Do NOT use an aria-* role or property,<br />if an equiavlent one already exists in HTML.<br />Host-language semantics are preferred.</p>
+    <p>Use sparingly!</p>
+    <p>Avoid initialising dynamic propeties in HTML source.<br />handle these with non-intrusive JavaScript.</p>
+  </section>
+  <section>
+    <h3>How Do ARIA and HTML Semantics Relate?</h3>
+    <p>ARIA is best used to <em>supplement</em> HTML semantics, but beware:<br />ARIA will also <em>override</em> HTML semantics.</p>
+    <p>Example: this is a BUTTON, not a heading...</p>
+    <pre><code>&lt;h3 role="button"&gt;Options&lt;/h3&gt;</code></pre>
+    <p>For a collapsible section, where both heading and button semantics are desired, use a button inside a heading. </p>
+    <pre><code>&lt;h3&gt;&lt;button&gt;Options&lt;/button&gt;&lt;/h3&gt;</code></pre>
+  </section>
+  <section>
+    <h3>Other Uses of ARIA</h3>
+    <ul>
+      <li>Use in other languages: SVG, MathML, ...</li>
+      <li>Sometimes <em>safer</em> to over-ride a HTML native role.<br />
+          Avoids breaking CSS or JS which deals with elements by tag names.</li>
+      <li>Complex relationships: text inputs in a table can be labelled by both Column and Row headers.</li>
+      <li>ASCII art!<br />
+          &lt;pre role=&quot;image&quot; aria-label=&quot;ASCII art picture of a fish&quot;&gt;<br />
+          equivalent to &lt;img alt=&quot;ASCII art fish&quot;/&gt;</li>
+    </ul>
+  </section>
+  <section>
+    <h3>Bypass Blocks - Part 2<br />
+    ARIA Landmark Roles</h3>
+    <p>These help assistive tech users get to the right part of the page quickly, e.g. <code>&lt;div role=navigation&gt;</code></p>
+    <p>ARIA roles: main, banner, contentinfo, navigation,<br />complementary, search, ...</p>
+    <p>New HTML5 elements offer equivalents:<br /> main, header, footer, nav, aside.</p>
+    <p>Caution: <a href="http://html5accessibility.com/">Internet Explorer still needs roles</a>, because the HTML semantics are not passed up through accessibility API.<br />i.e. &lt;nav role="navigation"&gt;</p>
+  </section>
+
+
+<!-- slideset: reading list -->
+  <section>
+    <h2>Reading List</h2>
+    <ul>
+      <li>TL;DR... <a href="http://a11yproject.com/">a11yproject.com</a><br />
+      A community-reviewed set of tutorials, recipes, and tips, aimed at those learning web accessibility.</li>
+      <li><a href="http://webaim.org/">WebAIM.org</a><br />
+      Great set of articles, screenreader tutorials, and the Screen Reader User Survey.
+      </li>
+    </ul>
+    <p>In fact, you might do better perusing <em>their</em> resource lists ;-)</p>
+  </section>
+  <section>
+    <h3>Using Personas</h3>
+    <p><a href="http://diveintoaccessibility.info/">Dive Into Accessibility</a></p>
+    <p>A short open-source book which gives a great introduction to thinking about accessibility, along with techiniques.</p>
+    <p>Particularly useful for introducing <em>personas</em> when considering accessibility. For every technique, it has a discussion of who benefits, and how.</p>
+    <p>It's starting to look a little dated (19-inch is a <em>large</em> monitor!), and a few techniques have changed, but few books match this one as an introduction to the topic.</p>
+  </section>
+  <section>
+    <h3>ARIA</h3>
+    <ul>
+      <li><a href="http://heydonworks.com/practical_aria_examples/">HeydonWorks' intro</a> - a good starting point</li>
+      <li><a href="https://www.marcozehe.de/category/aria/">Marco Zehe's Aria Tips</a></li>
+      <li><a href="https://www.w3.org/TR/wai-aria-practices/">WAI-ARIA Authoring Practices</a> - describes<br />the expected behaviour of UI widgets.</li>
+      <li><a href="http://pauljadam.com/#/demos">Paul J Adam's Demos</a> - worked examples</li>
+      <li><a href="http://oaa-accessibility.org/examples/state/153/">OpenAjax Alliance demos</a> - worked examples</li>
+    </ul>
+  </section>
+  <section>
+    <h3>Blogs</h3>
+    <ul>
+      <li><a href="https://www.paciellogroup.com/blog/">Paciello Group</a></li>
+      <li><a href="http://tink.uk/">L&eacute;onie Watson </a></li>
+      <li><a href="http://www.ssbbartgroup.com/blog/">SSB Bart Group</a></li>
+      <li><a href="http://simplyaccessible.com/articles/">Simply Accessible</a></li>
+    <ul>
+  </section>
+  <section>
+    <h3>Misc. Reading List</h3>
+    <ul>
+      <li>Twitter hashtag - #a11y</li>
+      <li><a href="https://www.marcozehe.de/articles/how-to-use-nvda-and-firefox-to-test-your-web-pages-for-accessibility/">Testing accessibility with NVDA screen-reader and Firefox</a><br />A great screen-reader tutorial.</li>
+      <li><a href="http://getbootstrap.com/components/">Twitter Bootstrap Components</a><br />Well documented, plenty detail about steps you need to take to make best use of Bootstrap's accessibility.</li>
+    </ul>
+  </section>
+
+
+<!-- slideset: End matter -->
+<section>
+  <h2>Any Questions?</h2>
+  <p>The End</p>
+</section>
+<section>
+  <h3>Image Credits</h3>
+  <ul>
+    <li>Screenshots from the <a href="https://www.eff.org/deeplinks/2016/03/deep-dive-why-forcing-apple-write-and-sign-code-violates-first-amendment">Electronic Frontier Foundation</a></li>
+    <li>Screenshots from <a href="https://www.ageaction.ie/">Age Action Ireland</a></li>
+    <li><a href="https://commons.wikimedia.org/wiki/Tango_icons">Tango icons</a> from Wikimedia Commons</li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:Snooker_Freeball.png">Snooker photo</a> from Wikimedia Commons</li>
+    <li>I made the silly space suit myself. <a href="https://twitter.com/wodgeyboy">Paul Woodhead</a> added the planets and stuff.</li>
+  </ul>
+</section>
+
+</div><!-- /.slides -->
+		</div><!-- /.reveal -->
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+                                transition: 'fade',
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
