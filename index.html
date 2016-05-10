@@ -265,6 +265,7 @@
   <section>
     <p>Solution? Underline the links!</p>
     <p>This allows links to stand out, without relying on colour alone.</p>
+    <p>Most web browsers already do this.</p>
   </section>
   <section>
     <img class="image--large" src="images/red-links-underline-ageaction.png" alt="Screenshot of article where red links are also underlined." />
@@ -397,7 +398,7 @@
   </section>
   <section>
     <h3>Buttons in Drupal Forms</h3>
-    <p>Watch out - in Drupal Form API the following code:</p>
+    <p>Watch out! In Drupal Form API the following code:</p>
     <code>'#type' => 'button'</code>
     <p>... actually produces... </p>
     <p><code>&lt;input type="submit"&gt;</code></p>
@@ -449,11 +450,11 @@
     <h3>So, What Does a Screen Reader<br />Actually Read?</h3>
     <p>It reads the <i>accessibility tree</i> - huh?</p> 
     <ul>
-      <li>Accessibility APIs are provided as part of the desktop operating system.</li>
-      <li>Web browsers and assistive technology communicate through these APIs.</li>
+      <li>Accessibility APIs are part of the desktop operating system.</li>
+      <li>Web browsers and assistive technology communicate via these APIs.</li>
       <li>The <i>accessibility tree</i> is a bit like a sub-set of the DOM, after taking into account HTML, CSS, ARIA, etc. </li>
       <li>Developer tools to inspect the accessibility tree are becoming more widely available.</li>
-      <li>Beware of accessibility tools which <a href="http://www.karlgroves.com/2013/09/06/web-accessibility-testing-tools-who-tests-the-dom/">only read the HTML source code</a>, instead of the DOM.</li> 
+      <li>Beware of tools which <a href="http://www.karlgroves.com/2013/09/06/web-accessibility-testing-tools-who-tests-the-dom/">only test the HTML source code</a>, instead of the DOM.</li> 
     </ul>
   </section>
   <section>
@@ -478,7 +479,8 @@
     <p>CSS affects accessibility in many ways.</p>
     <ul>
       <li>Colours live there! We've already looked at this.</li>
-      <li>Link styles (underline)</li>
+      <li>Link styles (underline).</li>
+      <li> focus styles (outline).</li>
       <li>How easy is it to distinguish heading styles visually?</li>
       <li>Make regions clearer - navigation and footer styling.</li>
     </ul>
@@ -679,7 +681,7 @@
 			// More info https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
 				history: true,
-                                transition: 'fade',
+                                transition: 'none',
 
 				// More info https://github.com/hakimel/reveal.js#dependencies
 				dependencies: [
