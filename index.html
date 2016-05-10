@@ -29,23 +29,16 @@
                   .reveal section img { border: medium none; box-shadow: none; }
                   .reveal img.img__inline { border: medium none; box-shadow: none; margin: 0; }
                   .reveal .image--large { height: 90%; width: 90%; }
+                  .reveal .image--medium { height: 70%; width: 70%; }
                 </style>
 	</head>
 	<body>
 		<div class="reveal">
 <div class="slides">
-<!-- slideset: make a custom widget work with a keyboard -->
-<!-- slideset: assistive technology -->
-<!-- slideset: make a custom widget work with a screenreader-->
-
-<!-- TODO bad form -->
-<!-- TODO form label describedby example-->
-<!-- TODO bad button code example -->
-<!-- TODO CSS effects display visibility visually-hidden -->
 
   <!-- slideset: intro -->
   <section>
-    <h1>Web Accessibility<br /><small>Techniques for Developers</small></h1>
+    <h1>Web Accessibility<br /><small>Techniques for Designers<br />and Developers</small></h1>
     <p>North West Drupal User Group<br />10th May 2016</p>
   </section>
 
@@ -97,6 +90,13 @@
       <li>"Visibility" - a wheel chair is apparent, dyslexia isn't.</li>
     </ul>
   </section>
+  <section>
+    <h3>Why am I telling you this?</h3>
+    <img alt="" src="http://chart.apis.google.com/chart?chxt=x,y&chtt=Reasons%20for%20Inaccessibility&cht=p3&chl=Lack%20of%20awareness|Lack%20of%20skills/knowledge|Look/feel/functionality|Lack%20of%20budget/resources&chs=530x180&chd=t:43,27,20,10&chco=AD3130" />
+    <p>More than two-thirds of screen reader users surveyed said a lack of awareness (43%) or skills (26.6%) were the primary reason that developers do not create accessible web sites.</p>
+    <p></p>
+    </p><small>Source: <a href="http://webaim.org/projects/screenreadersurvey6/#reasons">WebAIM Screen reader User Survey #6 Results</a></small></p>
+  </section>
 
 
 <!-- slideset: whose responsibility? -->
@@ -111,6 +111,7 @@
       <li>Information Architects - <i>navigation, page outline, data models</i></li>
       <li>UX designers - <i>can everyone take the same "journey"?</i></span></li>
       <li>Back-end developers - <i>your web service provide images, but does it also provide text alternatives?</i></li>
+      <li>Testers - <i>defining expected behaviour for custom UI components.</i></li>
     </ul>
   </section>
   <section>
@@ -177,7 +178,7 @@
 <!-- slideset: colour contrast -->
   <section>
     <h2>Colour Contrast</h2>
-    <p><i style="color: #aaa; background-color: #ccc; padding:0 1em;">Grey text, on a grey background, is hard to read.</i></p>
+    <p><i style="color: #aaa; background-color: #ddd; padding:0 1em;">Grey text, on a grey background, is hard to read.</i></p>
     <p>Who benefits? Users who...</p>
     <ul>
       <li>have low vision, e.g. <i>cateracts</i></li>
@@ -239,6 +240,7 @@
 <!-- slideset: colour blindness -->
   <section>
     <h2>Colour Blindness</h2>
+    <p><i>"Please correct the errors shown in red."</i></p>
     <ul>
       <li>Reduced ability to perceive one or more pigments.</li>
       <li>Affects ~8% of men (~4% of whole population)</li>
@@ -291,7 +293,7 @@
   <section>
     <h3>Basic keyboard controls</h3>
     <img alt="keyboard diagram, basic control keys highlighted" src="images/a11y-keyboard-layout-tkl.png" />
-    <p>The highlighted keys are used to ineract with a web page.</p>
+    <p>The highlighted keys are used to interact with a web page.</p>
   </section>
   <section>
     <h3>Interacting with the page</h3>
@@ -393,6 +395,16 @@
       <li>SVG, MathML.</li>
     </ul>
   </section>
+  <section>
+    <h3>Buttons in Drupal Forms</h3>
+    <p>Watch out - in Drupal Form API the following code:</p>
+    <code>'#type' => 'button'</code>
+    <p>... actually produces... </p>
+    <p><code>&lt;input type="submit"&gt;</code></p>
+    <p>If you want a <code>&lt;button&gt;</code> use</p>
+    <code>'#type' => 'markup'</code>
+    
+  </section>
 
 
 <!-- slideset: introducing the screen-reader experience -->
@@ -421,7 +433,8 @@
     </ul>
   </section>
   <section>
-    <img class="image--large" src="images/drupal8-aria-landmarks-nvda-dialog.png" alt="Screenshot of NVDA screen reader's landmarks dialog" />
+    <p>NVDA screen reader provides a tool to landmarks and headings.</p>
+    <img class="image--medium" src="images/drupal8-aria-landmarks-nvda-dialog.png" alt="Screenshot of NVDA screen reader's landmarks dialog" />
   </section>
   <section>
     <h3>Screenreader User habits</h3>
@@ -458,6 +471,54 @@
   </section>
 
 
+<!-- slideset: CSS affects a11y -->
+  <section>
+    <h2>What about CSS?</h2>
+    <p><i>Myth: </i>Good HTML is all that matters.</p>
+    <p>CSS affects accessibility in many ways.</p>
+    <ul>
+      <li>Colours live there! We've already looked at this.</li>
+      <li>Link styles (underline)</li>
+      <li>How easy is it to distinguish heading styles visually?</li>
+      <li>Make regions clearer - navigation and footer styling.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>Critical CSS Considerations</h3>
+    <p>CSS can hide content from assistive tech:</p>
+    <ul>
+      <li><code>label { display: none; }</code></li>
+      <li><code>label { visibility: hidden; }</code></li>
+    </ul>
+    <p>Both of these will hide content from screenreaders, and interactive elements will not be focusable by keyboard users.</p>
+    <p>Many frameworks provide a <code>.visually-hidden</code> class for hiding labels from the visual design, while making them available to screen readers.</p>
+  </section>
+  <section>
+    <h3>More CSS considerations</h3>
+    <p>Conversely, some methods of hiding content do not hide it from screen readers.</p>
+    <p><code>form .error-message { opacity: 0; }</code></p>
+    <p>An error message hidden in this way will be announced by a screen reader, whether there is an error or not!</p>
+  </section>
+  <section>
+    <h3>The <em>"Off-Canvas"</em> Myth</h3>
+    <p>Content rendered outside the viewport is still there!<br />This can be a help <em>or</em> a hindrance...</p>
+    <p><em>Good:</em><br />"Invisible" labels are still accessible to screen-readers.</p>
+    <p><em>Bad:</em><br />Focusable elements are still in the tabbing order. Sighted keyboard users can traverse these, but can't tell what is in focus! Operable, yet not perceivable. Example: a navigation menu which slides on/off the side of the page.</p>
+  </section>
+
+
+<!-- slideset: JavaScript affects a11y -->
+  <section>
+    <h2>What about Javascript?</h2>
+    <p><i>Myth: </i> Accessible sites can't use Javascript.</p>
+    <p>It's a similar story: JS can help or hinder accessibility.</p>
+    <p>Javascript can change CSS properties, or HTML attributes, or even replace whole chunks of HTML in the DOM.</p>
+    <p>Used with care, Javascript can <em>greatly</em> enhance accessibility.</p>
+    <p>It's time to learn about ARIA.</p>
+
+  </section>
+
+
 <!-- slideset: introducing ARIA -->
   <section>
     <h2>Introducing WAI-ARIA</h2>
@@ -475,9 +536,43 @@
     </ul>
   </section>
   <section>
+    <h3>Example: button states</h3>
+    <p>A "burger" style menu button. The <code>aria-expanded</code> property is toggled by Javascript during <code>toggleMenuList()</code>.</p>
+    <pre><code>
+  &lt;nav role="navigation" aria-labelledby="menuButton"&gt;
+    &lt;h3&gt;
+      &lt;button id="menuButton" 
+              onclick="toggleMenuList()"
+              aria-controls="menuList"
+              aria-expanded="true" &gt;Menu&lt;/button&gt;
+    &lt;/h3&gt;
+    &lt;ul id="menuList"&gt;
+      &lt;li&gt;Link 1&lt;/li&gt;
+      &lt;li&gt;Link 2&lt;/li&gt;
+      &lt;li&gt;Link 3&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+    </code></pre>
+    <p>For more detail, see my other <a href="http://fuzzbomb.github.io/js-a11y-intro-slideshow/">slideshow from LeedsJS</a>.</p>
+  </section>
+  <section>
+    <h3>Example: rich form descriptions</h3>
+    <p><code>aria-describedby</code> can associate help and/or error messages with a particular form input. Note that it  can take multiple element IDs.</p>
+    <pre><code>
+  &lt;label for="length"&gt;How long is a piece of string?&lt;/label&gt;
+  &lt;input id="length" type="number"
+         value="-10"
+         aria-describedby="length-help length-error"
+         aria-invalid=true /&gt;
+  &lt;div id="length-help"&gt;measured in inches.&lt;/div&gt;
+  &lt;div id="length-error"&gt;Error - length cannot be negative&lt;/div&gt;
+    </code></pre>
+    <p>A screenreader can announce "How long is a piece of string? Minus 10, number input, invalid, measured in inches. Error - length cannot be negative."</p>
+  </section>
+  <section>
     <h3>The Golden Rules of ARIA</h3>
-    </p>Do NOT use an aria-* role or property,<br />if an equiavlent one already exists in HTML.<br />Host-language semantics are preferred.</p>
     <p>Use sparingly!</p>
+    </p>Do NOT use an aria-* role or property,<br />if an equiavlent one already exists in HTML.<br />Host-language semantics are preferred.</p>
     <p>Avoid initialising dynamic propeties in HTML source.<br />handle these with non-intrusive JavaScript.</p>
   </section>
   <section>
